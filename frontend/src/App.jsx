@@ -4,6 +4,7 @@ import Home from "./pages/Home.jsx";
 import Navbar from "./components/common/Navbar.jsx";
 import ManagePass from "./pages/ManagePass.jsx";
 import Login from "./pages/Login.jsx";
+import SignUp from "./pages/SignUp.jsx";
 
 const App = () => {
   const location = useLocation();
@@ -20,6 +21,7 @@ const App = () => {
       { showNavbar() }
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/passwords" element={<ManagePass />} />
       </Routes>
