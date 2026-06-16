@@ -2,6 +2,7 @@ import React from "react";
 import Container from "../components/common/Container";
 import { Link } from "react-router-dom";
 import "../index.css";
+import { ShieldCheck } from "lucide-react";
 
 const Login = () => {
   return (
@@ -16,7 +17,7 @@ const Login = () => {
             <img
               src="./public/logo_2.png"
               alt=""
-              className="absolute top-15 left-15 md:w-15 w-10"
+              className="absolute top-8 left-9 md:w-15 w-10"
             />
             <img
               src="./public/login_img.jpg"
@@ -24,7 +25,12 @@ const Login = () => {
               className="w-full h-full rounded-3xl hidden md:block"
             />
 
-            <div className="hidden md:block absolute w-[70%] p-10 rounded-2xl backdrop-blur-lg bottom-15 left-15 border border-white/10">
+            <div className="absolute top-8 right-8 flex items-center gap-2 px-4 py-2 rounded-full bg-black/30 backdrop-blur-xl border border-white/10">
+              <ShieldCheck size={16} className="text-[#47f375]" />
+              <span className="text-sm">End-to-End Encrypted</span>
+            </div>
+
+            <div className="hidden md:block absolute w-[70%] p-10 rounded-2xl backdrop-blur-lg bottom-8 left-8 border border-white/10">
               <h1 className="font-bold text-4xl">Login to Your Vault</h1>
               <p className="text-xl mt-4">
                 Login to securely manage, store, and access your passwords

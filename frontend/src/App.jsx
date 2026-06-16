@@ -1,30 +1,31 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import Home from "./pages/Home.jsx";
 import Navbar from "./components/common/Navbar.jsx";
-import ManagePass from "./pages/ManagePass.jsx";
-import Login from "./pages/Login.jsx";
-import SignUp from "./pages/SignUp.jsx";
+import Loading from "./components/common/Loading.jsx";
+
+const Home = lazy(() => import("./pages/Home.jsx"));
+const SignUp = lazy(() => import("./pages/SignUp.jsx"));
+const Login = lazy(() => import("./pages/Login.jsx"));
+const ManagePass = lazy(() => import("./pages/ManagePass.jsx"));
 
 const App = () => {
   const location = useLocation();
 
-  const showNavbar = () => {
-    if(location.pathname === "/login" || location.pathname === "/signup"){
-      return 
-    }else {
-      return <Navbar />
-    }
-  }
+  const hideNavbarRoutes = ["/login", "/signup"];
+  const hideNavbar = hideNavbarRoutes.includes(location.pathname);
+
   return (
     <>
-      { showNavbar() }
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/passwords" element={<ManagePass />} />
-      </Routes>
+      {!hideNavbar && <Navbar />}
+
+      <Suspense fallback={<Loading />}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/passwords" element={<ManagePass />} />
+        </Routes>
+      </Suspense>
     </>
   );
 };
