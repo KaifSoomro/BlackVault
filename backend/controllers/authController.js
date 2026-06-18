@@ -211,7 +211,7 @@ export const login = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).json({
+      return res.status(400).json({
         success: false,
         message: "Invalid email or password.",
       });
@@ -241,7 +241,7 @@ export const login = async (req, res) => {
       message: "Login successful.",
       token,
       user: {
-        _id: user.id,
+        _id: user._id,
         fullName: user.fullName,
         userName: user.userName,
         email: user.email,

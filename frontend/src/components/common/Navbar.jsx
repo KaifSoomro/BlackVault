@@ -7,7 +7,6 @@ const Navbar = () => {
     <>
       <div className="flex items-center justify-center">
         <div className="w-[95%] px-3 md:max-w-3xl lg:max-w-4xl xl:max-w-[1600px] h-12 md:h-13 lg:h-15 flex items-center justify-between border border-white/15 rounded-full mt-4 backdrop-blur-lg bg-white/2 shadow-[inset_0_2px_2px_rgba(255,255,255,0.08),inset_0_-3px_5px_rgba(71,243,117,0.15),0_10px_30px_rgba(0,0,0,0.35)] fixed top-0 z-40">
-          {/* Logo */}
           <Link to="/" className="ms-1">
             <img
               src="/logo_1.png"
@@ -15,26 +14,41 @@ const Navbar = () => {
               className="w-35 md:w-40 lg:w-43"
             />
           </Link>
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-4 text-lg font-semibold">
+
+          <div className="hidden md:flex items-center gap-3 text-base font-medium">
             <NavLink
               to="/"
               className={({ isActive }) =>
-                `px-6 py-1.5 rounded-full border transition-all duration-300 ${isActive ? "border-[#47f375]/40 text-[#47f375] bg-[#47f375]/10" : "border-white/15 hover:border-[#47f375]/30"}`
+                `relative px-5 py-2 rounded-full transition-all duration-300 ${isActive ? "text-[#47f375] bg-[#47f375]/10 border border-[#47f375]/30 shadow-[0_0_20px_rgba(71,243,117,0.15)]" : "text-white/80 hover:text-white hover:bg-white/5 border border-transparent"}`
               }
             >
-              Home
+              {({ isActive }) => (
+                <>
+                  Home
+                  {isActive && (
+                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-[#47f375] shadow-[0_0_10px_#47f375]" />
+                  )}
+                </>
+              )}
             </NavLink>
+
             <NavLink
-              to="/passwords"
+              to="/my-passwords"
               className={({ isActive }) =>
-                `px-6 py-1.5 rounded-full border transition-all duration-300 ${isActive ? "border-[#47f375]/40 text-[#47f375] bg-[#47f375]/10" : "border-white/15 hover:border-[#47f375]/30"}`
+                `relative px-5 py-2 rounded-full transition-all duration-300 ${isActive ? "text-[#47f375] bg-[#47f375]/10 border border-[#47f375]/30 shadow-[0_0_20px_rgba(71,243,117,0.15)]" : "text-white/80 hover:text-white hover:bg-white/5 border border-transparent"}`
               }
             >
-              Passwords
+              {({ isActive }) => (
+                <>
+                  My Passwords
+                  {isActive && (
+                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-[#47f375] shadow-[0_0_10px_#47f375]" />
+                  )}
+                </>
+              )}
             </NavLink>
           </div>
-          {/* Right Side */}
+
           <div className="flex items-center gap-2 md:gap-5">
             <button className="scale-110 hover:scale-125 cursor-pointer hover:text-yellow-500 transition-all duration-300">
               <SunDim />
@@ -51,7 +65,6 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      {/* Mobile Menu */}
       <div
         className={`fixed inset-0 z-50 md:hidden transition-all duration-300 ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
       >
@@ -72,7 +85,7 @@ const Navbar = () => {
               <X size={20} />
             </button>
           </div>
-          {/* Links */}
+
           <div className="relative p-5 space-y-3">
             <NavLink
               to="/"
@@ -94,7 +107,7 @@ const Navbar = () => {
               <Shield size={20} className="text-[#47f375]" />
               <span className="font-medium">Passwords</span>
             </NavLink>
-            {/* Login Button */}
+
             <Link
               to="/login"
               onClick={() => setIsOpen(false)}
