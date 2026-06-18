@@ -2,12 +2,13 @@ import React, { lazy, Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/common/Navbar.jsx";
 import Loading from "./components/common/Loading.jsx";
-import VerifyEmail from "./pages/VerifyEmail.jsx";
+import Footer from "./components/common/Footer.jsx";
 
 const Home = lazy(() => import("./pages/Home.jsx"));
 const SignUp = lazy(() => import("./pages/SignUp.jsx"));
 const Login = lazy(() => import("./pages/Login.jsx"));
 const ManagePass = lazy(() => import("./pages/ManagePass.jsx"));
+const VerifyEmail = lazy(() => import("./pages/VerifyEmail.jsx"));
 
 const App = () => {
   const location = useLocation();
@@ -28,6 +29,8 @@ const App = () => {
           <Route path="/my-passwords" element={<ManagePass />} />
         </Routes>
       </Suspense>
+
+      {!hideNavbar && <Footer />}
     </>
   );
 };

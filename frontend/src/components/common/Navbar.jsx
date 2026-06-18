@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <>
       <div className="flex items-center justify-center">
-        <div className="w-[95%] px-3 md:max-w-3xl lg:max-w-4xl xl:max-w-[1600px] h-12 md:h-13 lg:h-15 flex items-center justify-between border border-white/15 rounded-full mt-4 backdrop-blur-lg bg-white/2 shadow-[inset_0_2px_2px_rgba(255,255,255,0.08),inset_0_-3px_5px_rgba(71,243,117,0.15),0_10px_30px_rgba(0,0,0,0.35)] fixed top-0 z-40">
+        <div className="w-[95%] px-3 md:max-w-3xl lg:max-w-4xl xl:max-w-[1600px] h-12 md:h-13 lg:h-15 flex items-center justify-between border border-white/15 rounded-full mt-4 backdrop-blur-xl bg-white/2 shadow-[inset_0_2px_2px_rgba(255,255,255,0.08),inset_0_-3px_5px_rgba(71,243,117,0.15),0_10px_30px_rgba(0,0,0,0.35)] fixed top-0 z-40">
           <Link to="/" className="ms-1">
             <img
               src="/logo_1.png"
