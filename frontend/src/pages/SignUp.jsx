@@ -35,13 +35,15 @@ const SignUp = () => {
         });
 
         const data = await res.json();
+        console.log(data)
         if(!res.ok){
-          throw new Error("Something went wrong.")
+          throw new Error(data.message || "Something went wrong.")
         }
 
         return data;
       } catch (error) {
         console.log("error: ", error.message);
+        throw error;
       }
     },
     onSuccess: () => {

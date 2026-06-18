@@ -175,9 +175,9 @@ export const verifyEmail = async (req, res) => {
       });
     }
 
-    if (!user.isVerified) {
-      return res.status(400).json({
-        success: false,
+    if (user.isVerified === true) {
+      return res.status(200).json({
+        success: true,
         message: "Email already verified",
       });
     }

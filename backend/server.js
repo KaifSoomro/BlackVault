@@ -6,7 +6,7 @@ import helmet from "helmet";
 import cors from "cors";
 
 const app = express();
-const PORT = process.env.PORT || 6000;
+const PORT = process.env.PORT || 8000;
 
 app.use(helmet());
 app.use(cors({
