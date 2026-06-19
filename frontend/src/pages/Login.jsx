@@ -82,12 +82,12 @@ const Login = () => {
         <div className="relative bg-linear-to-tr from-black to-neutral-900 md:h-190 rounded-3xl md:flex md:flex-row items-center flex-1 p-5 border border-neutral-900">
           <div className="hidden w-[50%] h-full md:block relative">
             <img
-              src="./public/logo_2.png"
+              src="/logo_2.png"
               alt=""
               className="absolute top-8 left-9 md:w-15 w-10"
             />
             <img
-              src="./public/login_img.jpg"
+              src="/login_img.jpg"
               alt=""
               className="w-full h-full rounded-3xl hidden md:block"
             />

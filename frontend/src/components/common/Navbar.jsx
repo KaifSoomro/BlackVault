@@ -1,8 +1,18 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Menu, SunDim, X, Home, Shield, LogIn } from "lucide-react";
+import { Menu, SunDim, X, Home, Shield, LogIn, LogOut } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../features/userSlice.js";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    dispatch(setUser(null));
+    setIsOpen(false);
+  };
   return (
     <>
       <div className="flex items-center justify-center">
@@ -49,12 +59,21 @@ const Navbar = () => {
             </NavLink>
           </div>
 
-          <Link
-            to="/login"
-            className="hidden md:flex items-center justify-center px-8 py-2 rounded-full text-lg font-semibold border border-[#47f375]/20 text-[#47f375] hover:shadow-[0_0_20px_rgba(71,243,117,0.4)] transition-all duration-300"
-          >
-            Login
-          </Link>
+          {user ? (
+            <button
+              onClick={handleLogout}
+              className="hidden md:flex items-center justify-center px-8 py-2 rounded-full text-lg font-semibold bg-red-500/30 border border-red-500/60 text-white hover:bg-red-500 transition-all duration-300"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className="hidden md:flex items-center justify-center px-8 py-2 rounded-full text-lg font-semibold border border-[#47f375]/20 text-[#47f375] hover:shadow-[0_0_20px_rgba(71,243,117,0.4)] transition-all duration-300"
+            >
+              Login
+            </Link>
+          )}
           <button onClick={() => setIsOpen(true)} className="block md:hidden">
             <Menu className="w-7 h-7 text-[#47f375]" />
           </button>
@@ -103,13 +122,22 @@ const Navbar = () => {
               <span className="font-medium">Passwords</span>
             </NavLink>
 
-            <Link
-              to="/login"
-              onClick={() => setIsOpen(false)}
-              className="mt-6 flex items-center justify-center gap-2 py-4 rounded-2xl bg-[#47f375] text-black font-bold hover:shadow-[0_0_30px_rgba(71,243,117,0.4)] transition-all duration-300"
-            >
-              <LogIn size={18} /> Login
-            </Link>
+            {user ? (
+              <button
+                onClick={handleLogout}
+                className="w-full mt-6 flex items-center justify-center gap-2 py-4 rounded-2xl bg-red-900/80 border border-red-500 text-white font-bold transition-all duration-300 active:scale-95"
+              >
+                <LogOut size={18} /> Logout
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                onClick={() => setIsOpen(false)}
+                className="mt-6 flex items-center justify-center gap-2 py-4 rounded-2xl bg-[#47f375] text-black font-bold hover:shadow-[0_0_30px_rgba(71,243,117,0.4)] transition-all duration-300"
+              >
+                <LogIn size={18} /> Login
+              </Link>
+            )}
             <div className="pt-4 text-center text-xs text-neutral-500">
               Secure Password Manager
             </div>

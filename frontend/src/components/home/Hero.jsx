@@ -25,8 +25,7 @@ const Hero = () => {
             </span>
             Access Anywhere.
           </h1>
-
-          {/* Description */}
+          
           <p className="max-w-3xl mx-auto md:mx-0 mt-5 text-base md:text-xl lg:text-2xl text-neutral-400 leading-7 md:leading-9">
             Store, manage, and protect your passwords in one encrypted
             vault. Access your credentials instantly across devices while
