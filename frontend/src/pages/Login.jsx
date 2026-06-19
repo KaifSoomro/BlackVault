@@ -1,10 +1,77 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "../components/common/Container";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../index.css";
 import { ShieldCheck } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { setUser } from "../features/userSlice.js"
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleFormData = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const { mutate: login, isPending } = useMutation({
+    mutationFn: async (formData) => {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/auth/login`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          },
+        );
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.message || "Something went wrong.");
+        }
+
+        localStorage.setItem("token", data?.token);
+        dispatch(setUser(data?.user));
+        navigate("/");
+
+        return data;
+      } catch (error) {
+        console.log("error: ", error.message);
+        throw error;
+      }
+    },
+    onSuccess: () => {
+      toast.success("Login successful.");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login(formData);
+
+    setFormData({
+      email: "",
+      password: "",
+    });
+  };
+
   return (
     <Container>
       <div className="w-full md:mt-20 mt-20 rounded-3xl p-px relative overflow-hidden">
@@ -40,7 +107,7 @@ const Login = () => {
           </div>
 
           <div className="md:w-[50%] md:px-40 mt-10 md:mt-0">
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="w-full md:flex flex-col justify-center items-center">
                 <div className="w-full md:text-lg">
                   <h1 className="md:text-5xl text-4xl font-bold">
@@ -53,16 +120,22 @@ const Login = () => {
                   <input
                     type="email"
                     placeholder="Email Address"
+                    name="email"
+                    value={formData.email}
+                    onChange={(e) => handleFormData(e)}
                     className="w-full mt-5 md:mt-8 h-12 ps-3 border border-neutral-700 rounded-lg outline-none focus:border-lime-600 bg-transparent transition-all ease-in-out duration-200"
                   />
                   <input
                     type="password"
                     placeholder="Password"
+                    name="password"
+                    value={formData.password}
+                    onChange={(e) => handleFormData(e)}
                     className="w-full mt-6 h-12 ps-3 border border-neutral-700 rounded-lg outline-none focus:border-lime-600 bg-transparent transition-all ease-in-out duration-200"
                   />
 
-                  <button className="w-full mt-6 py-2 md:py-2 text-black rounded-lg text-lg md:text-xl transition-all duration-200 ease-out bg-[#8abc01] hover:shadow-[0_0_20px_rgba(126,217,86,0.5)] hover:scale-102 font-bold text-center">
-                    Login
+                  <button type="submit" className="w-full mt-6 py-2 md:py-2 text-black rounded-lg text-lg md:text-xl transition-all duration-200 ease-out bg-[#8abc01] hover:shadow-[0_0_20px_rgba(126,217,86,0.5)] hover:scale-102 font-bold text-center">
+                    { isPending ? "Unlocking Vault..." : "Login"  }
                   </button>
 
                   <div className="text-center mt-3 md:mt-6 text-[#8abc01] hover:underline mb-8">

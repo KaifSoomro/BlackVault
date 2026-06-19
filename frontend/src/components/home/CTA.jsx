@@ -1,5 +1,6 @@
 import React from "react";
 import { ArrowRight, ShieldCheck } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const CTA = () => {
   return (
@@ -32,13 +33,13 @@ const CTA = () => {
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button className="group flex items-center gap-2 rounded-2xl bg-[#47f375] px-8 py-4 font-semibold text-black transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(71,243,117,0.45)]">
+              <Link to="/signup" className="group flex items-center gap-2 rounded-2xl bg-[#47f375] px-8 py-4 font-semibold text-black transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(71,243,117,0.45)]">
                 Get Started Free
                 <ArrowRight
                   size={18}
                   className="transition-transform duration-300 group-hover:translate-x-1"
                 />
-              </button>
+              </Link>
             </div>
 
             <div className="mt-14 grid grid-cols-2 gap-6 md:grid-cols-4">

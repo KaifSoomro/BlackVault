@@ -49,20 +49,15 @@ const Navbar = () => {
             </NavLink>
           </div>
 
-          <div className="flex items-center gap-2 md:gap-5">
-            <button className="scale-110 hover:scale-125 cursor-pointer hover:text-yellow-500 transition-all duration-300">
-              <SunDim />
-            </button>
-            <Link
-              to="/login"
-              className="hidden md:flex items-center justify-center px-8 py-2 rounded-full text-lg font-semibold border border-[#47f375]/20 text-[#47f375] hover:shadow-[0_0_20px_rgba(71,243,117,0.4)] transition-all duration-300"
-            >
-              Login
-            </Link>
-            <button onClick={() => setIsOpen(true)} className="block md:hidden">
-              <Menu className="w-7 h-7 text-[#47f375]" />
-            </button>
-          </div>
+          <Link
+            to="/login"
+            className="hidden md:flex items-center justify-center px-8 py-2 rounded-full text-lg font-semibold border border-[#47f375]/20 text-[#47f375] hover:shadow-[0_0_20px_rgba(71,243,117,0.4)] transition-all duration-300"
+          >
+            Login
+          </Link>
+          <button onClick={() => setIsOpen(true)} className="block md:hidden">
+            <Menu className="w-7 h-7 text-[#47f375]" />
+          </button>
         </div>
       </div>
       <div
