@@ -4,6 +4,7 @@ import Navbar from "./components/common/Navbar.jsx";
 import Loading from "./components/common/Loading.jsx";
 import Footer from "./components/common/Footer.jsx";
 import ProtectRoute from "./components/common/ProtectRoute.jsx";
+import AddPassword from "./pages/AddPassword.jsx";
 
 const Home = lazy(() => import("./pages/Home.jsx"));
 const SignUp = lazy(() => import("./pages/SignUp.jsx"));
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/verify/:token" element={<VerifyEmail />} />
           <Route path="/my-passwords" element={<ProtectRoute> <ManagePass /> </ProtectRoute>} />
+          <Route path="/add-new-password" element={<ProtectRoute> <AddPassword /> </ProtectRoute>} />
         </Routes>
       </Suspense>
 

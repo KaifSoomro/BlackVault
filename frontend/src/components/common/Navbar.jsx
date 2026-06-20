@@ -116,7 +116,7 @@ const Navbar = () => {
               <span className="font-medium">Home</span>
             </NavLink>
             <NavLink
-              to="/passwords"
+              to="/my-passwords"
               onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
                 `flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 ${isActive ? "border-[#47f375]/40 bg-[#47f375]/10" : "border-white/10 bg-white/3"}`
