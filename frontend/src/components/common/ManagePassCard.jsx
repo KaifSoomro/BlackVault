@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { PiGoogleChromeLogo } from "react-icons/pi";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Copy, Check, MoreHorizontal } from "lucide-react";
+import { Copy, Check, MoreHorizontal, User } from "lucide-react";
 import toast from "react-hot-toast";
 
 const ManagePassCard = () => {
@@ -26,7 +25,7 @@ const ManagePassCard = () => {
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#47f375]/20 bg-[#47f375]/10 text-[#47f375]">
-            <PiGoogleChromeLogo size={22} />
+            <span className="text-xl">K</span>
           </div>
 
           <div>
