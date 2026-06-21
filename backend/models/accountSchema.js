@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const accountSchema = mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
     websiteName: {
         type: String,
         required: true
