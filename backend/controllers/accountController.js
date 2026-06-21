@@ -59,3 +59,26 @@ export const addAccount = async (req, res) => {
     });
   }
 };
+
+export const getAccounts = async (req, res) => {
+  try {
+    const accounts = await Accounts.find({ userId: req.user._id }).select("-password");
+    if (accounts.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No accounts added yet.",
+      });
+    }
+
+    return res.status(200).json({
+        success: true,
+        accounts
+    })
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error in getAccounts",
+      error: error.message,
+    });
+  }
+};

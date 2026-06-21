@@ -166,7 +166,7 @@ const AddPassword = () => {
 
               <button
                 type="submit"
-                className="group flex flex-1 items-center justify-center gap-2 rounded-2xl bg-[#47f375] px-6 py-4 font-semibold text-black transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(71,243,117,0.4)]"
+                className="group flex flex-1 items-center justify-center gap-2 rounded-2xl bg-[#47f375] px-6 py-4 font-semibold text-black transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_5px_20px_rgba(71,243,117,0.4)]"
               >
                 <Save size={18} />
                 Save Password
