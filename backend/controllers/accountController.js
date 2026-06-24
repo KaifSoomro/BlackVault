@@ -60,9 +60,36 @@ export const addAccount = async (req, res) => {
   }
 };
 
+export const unlockVault = async (req, res) => {
+  const { masterPassword } = req.body;
+
+  const user = await User.findById(req.user._id);
+
+  const isMatch = await bcrypt.compare(masterPassword, user.masterPassword);
+
+  if (!isMatch) {
+    return res.status(401).json({
+      success: false,
+      message: "Invalid master password",
+    });
+  }
+
+  user.passwordAccessVerified = true;
+  user.passwordAccessExpiresAt = new Date(Date.now() + 60 * 60 * 1000);
+
+  await user.save();
+
+  return res.status(200).json({
+    success: true,
+    message: "Vault unlocked successfully",
+  });
+};
+
 export const getAccounts = async (req, res) => {
   try {
-    const accounts = await Accounts.find({ userId: req.user._id }).select("-password");
+    const user = await User.findById(req.user._id);
+    
+    const accounts = await Accounts.find({ userId: req.user._id });
     if (accounts.length === 0) {
       return res.status(404).json({
         success: false,
@@ -70,10 +97,35 @@ export const getAccounts = async (req, res) => {
       });
     }
 
+    if (
+      !user.passwordAccessVerified ||
+      !user.passwordAccessExpiresAt ||
+      user.passwordAccessExpiresAt < Date.now()
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "Vault is locked",
+      });
+    }
+
+    const allAccounts = accounts.map((account) => {
+      const bytes = CryptoJS.AES.decrypt(
+        account.password,
+        process.env.ENCRYPTION_KEY,
+      );
+
+      const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
+
+      return {
+        ...account._doc,
+        password: originalPassword,
+      };
+    });
+
     return res.status(200).json({
-        success: true,
-        accounts
-    })
+      success: true,
+      accounts: allAccounts,
+    });
   } catch (error) {
     return res.status(500).json({
       success: false,

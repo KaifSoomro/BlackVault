@@ -5,9 +5,10 @@ import bcrypt from "bcrypt";
 
 export const signup = async (req, res) => {
   try {
-    const { fullName, userName, email, password, confirmPassword } = req.body;
+    const { fullName, userName, email, password, confirmPassword, masterPin } =
+      req.body;
 
-    if (!fullName || !userName || !email || !password) {
+    if (!fullName || !userName || !email || !password || !masterPin) {
       return res.status(400).json({
         success: false,
         message: "All fields are required",
@@ -37,6 +38,13 @@ export const signup = async (req, res) => {
       });
     }
 
+    if (masterPin.length !== 6) {
+      return res.status(400).json({
+        success: false,
+        message: "Master PIN must be exactly 6 digits.",
+      });
+    }
+
     let hashedPassword;
     if (password !== confirmPassword) {
       return res.status(400).json({
@@ -47,6 +55,8 @@ export const signup = async (req, res) => {
       hashedPassword = await bcrypt.hash(password, 10);
     }
 
+    const hashedMasterPin = await bcrypt.hash(masterPin, 10);
+
     const token = jwt.sign({ email }, process.env.SECRET_KEY, {
       expiresIn: "10h",
     });
@@ -56,6 +66,7 @@ export const signup = async (req, res) => {
       userName: userName,
       email: email,
       password: hashedPassword,
+      masterPin: hashedMasterPin,
     });
 
     const verificationLink = `${process.env.FRONTEND_URL}/verify/${token}`;
