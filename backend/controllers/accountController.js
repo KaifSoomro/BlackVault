@@ -88,23 +88,12 @@ export const unlockVault = async (req, res) => {
 export const getAccounts = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
-    
+
     const accounts = await Accounts.find({ userId: req.user._id });
     if (accounts.length === 0) {
       return res.status(404).json({
         success: false,
         message: "No accounts added yet.",
-      });
-    }
-
-    if (
-      !user.passwordAccessVerified ||
-      !user.passwordAccessExpiresAt ||
-      user.passwordAccessExpiresAt < Date.now()
-    ) {
-      return res.status(403).json({
-        success: false,
-        message: "Vault is locked",
       });
     }
 
