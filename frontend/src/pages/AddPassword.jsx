@@ -8,10 +8,16 @@ import {
   Sparkles,
   Save,
   Mail,
+  Loader2,
 } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const AddPassword = () => {
   let randomString;
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     websiteName: "",
@@ -44,10 +50,53 @@ const AddPassword = () => {
     }));
   };
 
+  const { mutate: addAccount, isPending } = useMutation({
+    mutationFn: async (formData) => {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/accounts/add`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          },
+        );
+
+        const data = await res.json();
+        console.log(data);
+        if (!res.ok) {
+          throw new Error(data.message || "Something went wrong.");
+        }
+
+        return data;
+      } catch (error) {
+        console.log("error: ", error.message);
+        throw error;
+      }
+    },
+    onSuccess: () => {
+        toast.success("Account added successfully.");
+
+        setFormData({
+          websiteName: "",
+          websiteUrl: "",
+          email: "",
+          password: "",
+        });
+
+        navigate("/my-passwords");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log(formData);
+    addAccount(formData);
   };
 
   return (
@@ -168,8 +217,12 @@ const AddPassword = () => {
                 type="submit"
                 className="group flex flex-1 items-center justify-center gap-2 rounded-2xl bg-[#47f375] px-6 py-4 font-semibold text-black transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_5px_20px_rgba(71,243,117,0.4)]"
               >
-                <Save size={18} />
-                Save Password
+                {isPending ? (
+                  <Loader2 size={18} className="animate-spin" />
+                ) : (
+                  <Save size={18} />
+                )}
+                {isPending ? "Saving..." : "Save Password"}
               </button>
             </div>
           </form>
