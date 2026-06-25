@@ -6,7 +6,7 @@ import { checkVaultAccess } from "../middlewares/checkVaultAccess.js";
 const router = express.Router();
 
 router.post("/add", protectRoute, addAccount);
-router.get("/accounts", protectRoute, checkVaultAccess, getAccounts);
+router.get("/all-accounts", protectRoute, checkVaultAccess, getAccounts);
 router.post("/unlock", protectRoute, unlockVault);
 
 export default router;

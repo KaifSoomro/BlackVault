@@ -1,6 +1,7 @@
 import User from "../models/userSchema.js";
 import CryptoJS from "crypto-js";
 import Accounts from "../models/accountSchema.js";
+import bcrypt from "bcrypt";
 
 export const addAccount = async (req, res) => {
   try {
@@ -61,11 +62,11 @@ export const addAccount = async (req, res) => {
 };
 
 export const unlockVault = async (req, res) => {
-  const { masterPassword } = req.body;
+  const { masterPin } = req.body;
 
   const user = await User.findById(req.user._id);
 
-  const isMatch = await bcrypt.compare(masterPassword, user.masterPassword);
+  const isMatch = await bcrypt.compare(masterPin, user.masterPin);
 
   if (!isMatch) {
     return res.status(401).json({
