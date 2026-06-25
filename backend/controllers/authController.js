@@ -45,16 +45,7 @@ export const signup = async (req, res) => {
       });
     }
 
-    let hashedPassword;
-    if (password !== confirmPassword) {
-      return res.status(400).json({
-        success: false,
-        message: "Password and Confirm Password must match.",
-      });
-    } else {
-      hashedPassword = await bcrypt.hash(password, 10);
-    }
-
+    const hashedPassword = await bcrypt.hash(password, 10);
     const hashedMasterPin = await bcrypt.hash(masterPin, 10);
 
     const token = jwt.sign({ email }, process.env.SECRET_KEY, {

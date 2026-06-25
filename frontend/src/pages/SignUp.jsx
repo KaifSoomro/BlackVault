@@ -12,7 +12,7 @@ const SignUp = () => {
     userName: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    masterPin: "",
   });
 
   const handleFormData = (e) => {
@@ -63,7 +63,7 @@ const SignUp = () => {
       userName: "",
       email: "",
       password: "",
-      confirmPassword: ""
+      masterPin: ""
     })
   }
   return (
@@ -149,11 +149,11 @@ const SignUp = () => {
 
                   <input
                     type="password"
-                    placeholder="Confirm Password"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
+                    placeholder="Create a 6 Digits Master Pin"
+                    name="masterPin"
+                    value={formData.masterPin}
                     onChange={handleFormData}
-                    className="w-full mt-5 md:mt-8 h-12 ps-3 border border-neutral-700 rounded-lg outline-none focus:border-lime-600 bg-transparent transition-all ease-in-out duration-200"
+                    className="w-full mt-6 h-12 ps-3 border border-neutral-700 rounded-lg outline-none focus:border-lime-600 bg-transparent transition-all ease-in-out duration-200"
                   />
 
                   <button type="submit" className="w-full mt-6 py-2 md:py-2 text-black rounded-lg text-lg md:text-xl transition-all duration-200 ease-out bg-[#8abc01] hover:shadow-[0_0_20px_rgba(126,217,86,0.5)] hover:scale-102 font-bold text-center">
