@@ -149,7 +149,9 @@ const ManagePass = () => {
             </Link>
           </div>
           <div className="w-full my-15 grid grid-cols-1 md:grid-cols-3">
-            <ManagePassCard />
+            { data?.map((value, index) => (
+              <ManagePassCard key={index} value={value}/>
+            )) }
           </div>{" "}
         </>
       )}

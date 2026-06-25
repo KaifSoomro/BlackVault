@@ -62,28 +62,35 @@ export const addAccount = async (req, res) => {
 };
 
 export const unlockVault = async (req, res) => {
-  const { masterPin } = req.body;
+  try {
+    const { masterPin } = req.body;
 
-  const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user._id);
 
-  const isMatch = await bcrypt.compare(masterPin, user.masterPin);
+    const isMatch = await bcrypt.compare(masterPin, user.masterPin);
 
-  if (!isMatch) {
-    return res.status(401).json({
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid master password",
+      });
+    }
+
+    user.passwordAccessVerified = true;
+    user.passwordAccessExpiresAt = new Date(Date.now() + 60 * 60 * 1000);
+
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Vault unlocked successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
       success: false,
-      message: "Invalid master password",
+      message: error.message,
     });
   }
-
-  user.passwordAccessVerified = true;
-  user.passwordAccessExpiresAt = new Date(Date.now() + 60 * 60 * 1000);
-
-  await user.save();
-
-  return res.status(200).json({
-    success: true,
-    message: "Vault unlocked successfully",
-  });
 };
 
 export const getAccounts = async (req, res) => {

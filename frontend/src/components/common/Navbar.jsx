@@ -1,20 +1,59 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Menu, SunDim, X, Home, Shield, LogIn, LogOut } from "lucide-react";
+import {
+  Menu,
+  SunDim,
+  X,
+  Home,
+  Shield,
+  LogIn,
+  LogOut,
+  Loader2,
+} from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../features/userSlice.js";
 import { toast } from "react-hot-toast";
+import { useMutation } from "@tanstack/react-query";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const token = localStorage.getItem("token")
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    dispatch(setUser(null));
-    toast.success("Logout successful.")
-    setIsOpen(false);
-  };
+  const { mutate: handleLogout, isPending } = useMutation({
+    mutationFn: async () => {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/auth/logout`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          },
+        );
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.message || "Something went wrong.");
+        }
+
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    },
+    onSuccess: (data) => {
+      localStorage.removeItem("token");
+      dispatch(setUser(null));
+      toast.success(data.message);
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
   return (
     <>
       <div className="flex items-center justify-center">
@@ -66,15 +105,19 @@ const Navbar = () => {
               onClick={handleLogout}
               className="hidden md:flex items-center justify-center gap-2 px-8 py-2 rounded-full text-lg font-semibold bg-red-500/30 border border-red-500/60 text-white hover:bg-red-500 transition-all duration-300"
             >
-              <LogOut className="w-5"/>
-              Logout
+              {isPending ? (
+                <Loader2 className="w-5" />
+              ) : (
+                <LogOut className="w-5" />
+              )}
+              {isPending ? "Logging out..." : "Logout"}
             </button>
           ) : (
             <Link
               to="/login"
               className="hidden md:flex items-center justify-center gap-2 px-8 py-2 rounded-full text-lg font-semibold border border-[#47f375]/20 text-[#47f375] hover:shadow-[0_0_20px_rgba(71,243,117,0.4)] transition-all duration-300"
             >
-              <LogIn className="w-5"/>
+              <LogIn className="w-5" />
               Login
             </Link>
           )}
@@ -131,7 +174,12 @@ const Navbar = () => {
                 onClick={handleLogout}
                 className="w-full mt-6 flex items-center justify-center gap-2 py-4 rounded-2xl bg-red-900/80 border border-red-500 text-white font-bold transition-all duration-300 active:scale-95"
               >
-                <LogOut size={18} /> Logout
+                {isPending ? (
+                  <Loader2 size={18} />
+                ) : (
+                  <LogOut size={18} />
+                )}
+                {isPending ? "Logging out..." : "Logout"}
               </button>
             ) : (
               <Link
