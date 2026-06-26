@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../features/userSlice.js";
 import { toast } from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
+import { easeInOut, motion } from "framer-motion";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useSelector((state) => state.user);
@@ -56,7 +57,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center">
+      <motion.div initial={{ y:-30, opacity: 0 }} animate={{ y:0, opacity:1 }} transition={{ duration:0.3, ease:easeInOut }} className="flex items-center justify-center">
         <div className="w-[95%] px-3 md:max-w-3xl lg:max-w-4xl xl:max-w-[1600px] h-12 md:h-13 lg:h-15 flex items-center justify-between border border-white/15 rounded-full mt-4 backdrop-blur-xl bg-white/2 shadow-[inset_0_2px_2px_rgba(255,255,255,0.08),inset_0_-3px_5px_rgba(71,243,117,0.15),0_10px_30px_rgba(0,0,0,0.35)] fixed top-0 z-40">
           <Link to="/" className="ms-1">
             <img
@@ -125,7 +126,7 @@ const Navbar = () => {
             <Menu className="w-7 h-7 text-[#47f375]" />
           </button>
         </div>
-      </div>
+      </motion.div>
       <div
         className={`fixed inset-0 z-50 md:hidden transition-all duration-300 ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
       >
