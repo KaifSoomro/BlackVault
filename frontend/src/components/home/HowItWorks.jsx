@@ -1,10 +1,6 @@
 import React from "react";
-import {
-  ShieldCheck,
-  Lock,
-  Database,
-  LaptopMinimal,
-} from "lucide-react";
+import { ShieldCheck, Lock, Database, LaptopMinimal } from "lucide-react";
+import { motion } from "framer-motion";
 
 const steps = [
   {
@@ -38,25 +34,44 @@ const HowItWorks = () => {
     <section className="w-full py-24 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <span className="inline-block px-4 py-2 rounded-full border border-[#47f375]/20 bg-[#47f375]/5 text-[#47f375] text-sm font-medium">
+          <motion.span
+            initial={{ y: 30, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.4 }}
+            className="inline-block px-4 py-2 rounded-full border border-[#47f375]/20 bg-[#47f375]/5 text-[#47f375] text-sm font-medium"
+          >
             HOW IT WORKS
-          </span>
+          </motion.span>
 
-          <h2 className="mt-6 text-4xl md:text-5xl font-bold text-white">
+          <motion.h2
+            initial={{ y: 30, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.4 }}
+            className="mt-6 text-4xl md:text-5xl font-bold text-white"
+          >
             Secure Your Passwords
             <span className="block bg-linear-to-r from-[#47f375] to-[#7CFF9B] bg-clip-text text-transparent">
               In 4 Simple Steps
             </span>
-          </h2>
+          </motion.h2>
 
-          <p className="max-w-2xl mx-auto mt-5 text-neutral-400">
+          <motion.p
+            initial={{ y: 30, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.4 }}
+            className="max-w-2xl mx-auto mt-5 text-neutral-400"
+          >
             BlackVault keeps your credentials protected with military-grade
             encryption and seamless cloud access.
-          </p>
+          </motion.p>
         </div>
 
-        {/* Steps */}
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8 relative">
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.4 }}
+          className="grid lg:grid-cols-4 md:grid-cols-2 gap-8 relative"
+        >
           {steps.map((step, index) => (
             <div
               key={index}
@@ -85,9 +100,14 @@ const HowItWorks = () => {
               )}
             </div>
           ))}
-        </div>
+        </motion.div>
 
-        <div className="mt-16 rounded-3xl border border-neutral-800 bg-linear-to-r from-neutral-950 to-neutral-900 p-8">
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.4 }}
+          className="mt-16 rounded-3xl border border-neutral-800 bg-linear-to-r from-neutral-950 to-neutral-900 p-8"
+        >
           <div className="grid md:grid-cols-3 gap-8 text-center">
             <div>
               <h4 className="text-[#47f375] text-2xl font-bold">256-bit</h4>
@@ -110,7 +130,7 @@ const HowItWorks = () => {
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

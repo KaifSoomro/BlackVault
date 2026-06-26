@@ -3,10 +3,16 @@ import { FaGithub, FaLinkedin, FaFacebook } from "react-icons/fa";
 import React from "react";
 import { Link } from "react-router-dom";
 import Container from "./Container";
+import { motion } from "framer-motion";
 
 const Footer = () => {
   return (
-    <footer className="border-t border-neutral-900 bg-black">
+    <motion.footer
+      initial={{ y: 30, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      className="border-t border-neutral-900 bg-black"
+    >
       <Container>
         <div className="py-16">
           <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-5">
@@ -122,7 +128,7 @@ const Footer = () => {
           </div>
         </div>
       </Container>
-    </footer>
+    </motion.footer>
   );
 };
 
