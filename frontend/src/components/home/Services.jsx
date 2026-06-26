@@ -1,5 +1,6 @@
 import React from "react";
 import { LockKeyhole, ShieldCheck, KeyRound } from "lucide-react";
+import { motion } from "framer-motion";
 
 const services = [
   {
@@ -27,23 +28,42 @@ const Services = () => {
     <section className="py-24 bg-black">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="px-4 py-1.5 rounded-full border border-[#47f375]/20 bg-[#47f375]/10 text-[#47f375] text-sm font-medium">
+          <motion.span
+            initial={{ y: 30, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.4 }}
+            className="px-4 py-1.5 rounded-full border border-[#47f375]/20 bg-[#47f375]/10 text-[#47f375] text-sm font-medium"
+          >
             Security Features
-          </span>
+          </motion.span>
 
-          <h2 className="mt-6 text-4xl md:text-5xl font-bold text-white">
+          <motion.h2
+            initial={{ y: 30, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.4 }}
+            className="mt-6 text-4xl md:text-5xl font-bold text-white"
+          >
             Everything You Need To Keep
             <span className="text-[#47f375]"> Passwords Safe</span>
-          </h2>
+          </motion.h2>
 
-          <p className="mt-5 text-neutral-400 text-lg">
-            BlackVault provides enterprise-grade security features
-            designed to protect your credentials while keeping access
-            simple and seamless.
-          </p>
+          <motion.p
+            initial={{ y: 30, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.4 }}
+            className="mt-5 text-neutral-400 text-lg"
+          >
+            BlackVault provides enterprise-grade security features designed to
+            protect your credentials while keeping access simple and seamless.
+          </motion.p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.4 }}
+          className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+        >
           {services.map((service, index) => {
             const Icon = service.icon;
 
@@ -53,7 +73,7 @@ const Services = () => {
                 className="
                   group relative overflow-hidden rounded-3xl
                   border border-neutral-800
-                  bg-gradient-to-b from-neutral-900 to-black
+                  bg-linear-to-b from-neutral-900 to-black
                   p-8
                   transition-all duration-500
                   hover:-translate-y-2
@@ -81,7 +101,7 @@ const Services = () => {
               </div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
